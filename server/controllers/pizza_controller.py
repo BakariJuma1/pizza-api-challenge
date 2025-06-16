@@ -8,4 +8,4 @@ pizza_bp = Blueprint('pizza_bp', __name__)
 def get_pizzas():
     pizzas = Pizza.query.all()
     result = [p.to_dict() for p in pizzas]
-    return jsonify(result)
+    return jsonify(result),200
