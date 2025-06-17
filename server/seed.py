@@ -1,10 +1,10 @@
 from server.models import db, Restaurant, Pizza
 from server.app import create_app
 from server.app import db
-# Create app instance
+#  app instance
 app = create_app()
 
-# Push app context
+#  app context
 with app.app_context():
     print("Dropping all tables...")
     db.drop_all()
@@ -14,7 +14,7 @@ with app.app_context():
 
     print("Seeding data...")
 
-    # Add your seed data here
+    #  seed data 
     r1 = Restaurant(name="Mama's Pizza", address="123 Cheese Street")
     r2 = Restaurant(name="Pepperoni Palace", address="456 Tomato Ave")
 
