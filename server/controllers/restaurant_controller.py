@@ -10,13 +10,10 @@ restaurant_bp = Blueprint('restaurant_bp', __name__, url_prefix='/restaurants')
 # def index():
 #     return {"message": "Restaurant route working"}
 
-@restaurant_bp.route("/restaurant", methods=["GET"])
+@restaurant_bp.route("/", methods=["GET"])
 def get_restaurants():
     restaurants = Restaurant.query.all()
-    result = [
-        {"id": r.id, "name": r.name, "address": r.address}
-        for r in restaurants
-    ]
+    result = [r.to_dict() for r in restaurants]
     return jsonify(result), 200
 
 
@@ -26,20 +23,8 @@ def get_restaurant_by_id(id):
     if not restaurant:
         return jsonify({"error": "Restaurant not found"}), 404
 
-    pizzas = [
-        {
-            "id": rp.pizza.id,
-            "name": rp.pizza.name,
-            "ingredients": rp.pizza.ingredients
-        }
-        for rp in restaurant.restaurant_pizzas
-    ]
-    return jsonify({
-        "id": restaurant.id,
-        "name": restaurant.name,
-        "address": restaurant.address,
-        "pizzas": pizzas
-    }), 200
+    data = restaurant.to_dict(rules=('restaurant_pizzas.pizza',)) 
+    return jsonify(data), 200
 
 
 @restaurant_bp.route("/<int:id>", methods=["DELETE"])

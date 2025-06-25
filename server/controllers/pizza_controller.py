@@ -9,3 +9,8 @@ def get_pizzas():
     pizzas = Pizza.query.all()
     result = [p.to_dict() for p in pizzas]
     return jsonify(result),200
+
+
+
+
+

@@ -36,19 +36,4 @@ def create_restaurant_pizza():
     db.session.add(rp)
     db.session.commit()
 
-    return jsonify({
-        "id": rp.id,
-        "price": rp.price,
-        "pizza_id": rp.pizza.id,
-        "restaurant_id": rp.restaurant.id,
-        "pizza": {
-            "id": rp.pizza.id,
-            "name": rp.pizza.name,
-            "ingredients": rp.pizza.ingredients
-        },
-        "restaurant": {
-            "id": rp.restaurant.id,
-            "name": rp.restaurant.name,
-            "address": rp.restaurant.address
-        }
-    }), 201
+    return jsonify(rp.to_dict(rules=('pizza','restaurant'))), 201

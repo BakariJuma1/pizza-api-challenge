@@ -1,6 +1,8 @@
 from server.app import db
+from sqlalchemy_serializer import SerializerMixin
 
-class Pizza(db.Model):
+
+class Pizza(db.Model,SerializerMixin):
     __tablename__ = 'pizzas'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -8,9 +10,4 @@ class Pizza(db.Model):
     ingredients = db.Column(db.String, nullable=False)
 
     restaurant_pizzas = db.relationship("RestaurantPizza", backref="pizza")
-    def to_dict(self):
-        return {
-            "id": self.id,
-            "name": self.name,
-            "ingredients": self.ingredients
-        }
+ 
